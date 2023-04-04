@@ -71,6 +71,10 @@ export default function CookieButton({
         className={`mswebcookie-button flex items-center justify-center ${
           isCookieBannerOpen ? "" : "active"
         }`}
+        //  className={{
+        //   "mswebcookie-button flex items-center justify-center": true,
+        //   "active": isCookieBannerOpen,
+        // }}
         onClick={onClick}
       >
         {iconCookie ? (

@@ -14,17 +14,17 @@ export default function Debug({ open = false }: { open?: boolean }) {
 
   if (!open) return null;
 
-  const handleYoutubeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const toggleYoutubeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setYoutube(event.target.checked);
   };
 
-  const handleGoogleMapsChange = (
+  const toggleGoogleMapsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setGoogleMaps(event.target.checked);
   };
 
-  const handleGoogleAnalyticsChange = (
+  const toggleGoogleAnalyticsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setGoogleAnalytics(event.target.checked);
@@ -47,24 +47,24 @@ export default function Debug({ open = false }: { open?: boolean }) {
           <label>
             <input
               type="checkbox"
-              defaultChecked={isYoutubeAccepted.toString() === "true"}
-              onChange={handleYoutubeChange}
+              defaultChecked={isYoutubeAccepted?.toString() === "true"}
+              onChange={toggleYoutubeChange}
             />
             YouTube
           </label>
           <label>
             <input
               type="checkbox"
-              defaultChecked={isGoogleMapsAccepted.toString() === "true"}
-              onChange={handleGoogleMapsChange}
+              defaultChecked={isGoogleMapsAccepted?.toString() === "true"}
+              onChange={toggleGoogleMapsChange}
             />
             Google Maps
           </label>
           <label>
             <input
               type="checkbox"
-              defaultChecked={isGoogleAnalyticsAccepted.toString() === "true"}
-              onChange={handleGoogleAnalyticsChange}
+              defaultChecked={isGoogleAnalyticsAccepted?.toString() === "true"}
+              onChange={toggleGoogleAnalyticsChange}
             />
             Google Analytics
           </label>

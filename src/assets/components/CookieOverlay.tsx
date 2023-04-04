@@ -10,7 +10,7 @@ export default function CookieOverlay() {
 
   return (
     <>
-      <style>
+      {/* <style>
         {`
           #mswebcookie-overlay {
             position: fixed;
@@ -36,7 +36,7 @@ export default function CookieOverlay() {
             }
           }
         `}
-      </style>
+      </style> */}
       <div id="mswebcookie-overlay" className="active"></div>
     </>
   );
