@@ -1,3 +1,5 @@
+import { useCookieContext } from "../context/CookieContext";
+
 type CookieButtonProps = {
   primaryColor?: string;
   textColor?: string;
@@ -5,16 +7,6 @@ type CookieButtonProps = {
   hasBorder?: boolean;
   iconCookie?: JSX.Element;
   ariaLabel?: string;
-  isCookieBannerOpen?: boolean;
-  onClick?: () => void;
-};
-
-const defaultCookieButtonProps: CookieButtonProps = {
-  primaryColor: "#ffce00",
-  textColor: "#000",
-  IsRounded: true,
-  hasBorder: true,
-  ariaLabel: "Handle Cookie Settings",
 };
 
 export default function CookieButton({
@@ -24,9 +16,9 @@ export default function CookieButton({
   hasBorder = true,
   iconCookie,
   ariaLabel = "Handle Cookie Settings",
-  isCookieBannerOpen,
-  onClick,
 }: CookieButtonProps) {
+  const { isCookieBannerOpen, setCookieBannerOpen } = useCookieContext();
+
   return (
     <>
       <style>
@@ -75,7 +67,7 @@ export default function CookieButton({
         //   "mswebcookie-button flex items-center justify-center": true,
         //   "active": isCookieBannerOpen,
         // }}
-        onClick={onClick}
+        onClick={() => setCookieBannerOpen(true)}
       >
         {iconCookie ? (
           iconCookie
