@@ -50,7 +50,7 @@ export default function CookieOptions() {
           <label
             aria-labelledby={`${cookieType}-cookies`}
             aria-label={`${labelText} cookies`}
-            className="cookie-parameter__label"
+            className="cookie-parameter__label text-xs"
             htmlFor={`${cookieType}-id`}
           ></label>
           <span className="cookie-parameter__name" id={`${cookieType}-cookies`}>
@@ -79,7 +79,10 @@ export default function CookieOptions() {
 
   return (
     <div className="cookie-options">
-      <div className="cookie-switchers" aria-labelledby="cookie-settings">
+      <div
+        className="flex flex-wrap w-full justify-between my-6 gap-4"
+        aria-labelledby="cookie-settings"
+      >
         <div className="cookie-parameter">
           <input
             disabled={true}
@@ -93,7 +96,7 @@ export default function CookieOptions() {
           />
           <label
             aria-labelledby="Funktion-cookies"
-            className="cookie-parameter__label"
+            className="cookie-parameter__label text-xs"
             htmlFor="Function"
           ></label>
           <span className="cookie-parameter__name" id="Funktion-cookies">
@@ -102,13 +105,13 @@ export default function CookieOptions() {
         </div>
         {renderCookieOptions()}
       </div>
-      <div className="cookie-buttons">
+      <div className="flex flex-row items-center gap-4 justify-center">
         <button
           tabIndex={0}
           type="button"
-          title="Alle Cookies, bis auf Funktions-Cookies, ablehnen"
-          aria-label="Alle Cookies, bis auf Funktions-Cookies, ablehnen"
-          className="btn !text-white cookie-cancel"
+          title="Return all cookies to previous state and close banner"
+          aria-label="Return all cookies to previous state and close banner"
+          className="btn btn-action cookie-cancel"
           onClick={handleCancel}
         >
           {data.cookieBanner.cancel}

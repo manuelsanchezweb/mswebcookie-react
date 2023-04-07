@@ -15,6 +15,12 @@
   font-family: "Roboto", sans-serif;
 }
 
+:root {
+  --color-primary: #ffce00;
+  --color-secondary: #007521;
+  --color-action: #ff4242;
+}
+
 iframe {
   max-width: 100%;
 }
@@ -31,6 +37,10 @@ iframe {
 @layer components {
   .btn {
     @apply bg-gray-500 flex py-1 px-3 text-white rounded-lg text-sm w-fit;
+  }
+
+  .btn-action {
+    @apply bg-[var(--color-action)];
   }
 }
 
@@ -88,60 +98,27 @@ iframe {
   }
 }
 
-.cookie-buttons {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
-
-@media only screen and (min-width: 500px) {
-  .cookie-buttons {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-
-.cookie-buttons button {
-  font-family: "Roboto", sans-serif;
-  margin: 1.1em 0 0 0;
-}
-
-.cookie-buttons button.cookie-accept {
-  background-color: #ffce00;
-  color: #000;
-  border: 1px solid #000;
-}
-
-.cookie-buttons button.cookie-accept:focus {
-  border: 1px solid #ffce00;
-  background-color: #ffce00;
-}
-
-.cookie-buttons button.cookie-accept:hover {
-  background-color: #ffce00;
-  color: #000;
-}
-
 .cookie-parameter {
   position: relative;
   display: flex;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column-reverse;
+  gap: 0.5em;
 }
 
 .cookie-parameter__label {
   display: inline-block;
   outline: 0;
-  width: 3.2em;
-  height: 2em;
+  width: 2.6em;
+  height: 1.7em;
   position: relative;
   cursor: pointer;
   user-select: none;
-  background: #fefefe;
+  background: #000;
   border-radius: 2em;
   padding: 0.2em;
   transition: all 0.4s ease;
-  border: 2px solid #00aeec;
+  border: 1px solid #fff;
 }
 
 .cookie-parameter__input {
@@ -166,7 +143,7 @@ iframe {
 input:hover + .cookie-parameter__label::after,
 input:focus + .cookie-parameter__label::after {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.08),
-    inset 0px 0px 0px 1.5px #00aecc;
+    inset 0px 0px 0px 1.5px var(--color-secondary);
 }
 
 .cookie-parameter__label::after {
@@ -187,7 +164,7 @@ input:checked + .cookie-parameter__label::after {
   left: 45%;
 }
 input:checked + .cookie-parameter__label {
-  background: #00aecc;
+  background: var(--color-secondary);
 }
 
 input:checked:active + .cookie-parameter__label {
@@ -202,8 +179,8 @@ input:active + .cookie-parameter__label::after {
   padding-right: 0.8em;
 }
 
-.cookie-banner a,
-.cookie-banner button {
+.cookie-layer-menu a,
+.cookie-layer-menu button {
   color: #292929;
   margin: 0;
   transition: font-weight 0.3s ease-in-out transform 0.3s ease-in-out;
@@ -212,16 +189,16 @@ input:active + .cookie-parameter__label::after {
 }
 
 @media only screen and (min-width: 500px) {
-  .cookie-banner a,
-  .cookie-banner button {
+  .cookie-layer-menu a,
+  .cookie-layer-menu button {
     margin: 0.7em 2.825em 0.7em 0;
     position: relative;
     font-size: 0.875rem;
     letter-spacing: 0.01em;
   }
 
-  .cookie-banner a:after,
-  .cookie-banner button:after {
+  .cookie-layer-menu a:after,
+  .cookie-layer-menu button:after {
     content: "|";
     width: 1px;
     height: 1px;
@@ -230,18 +207,18 @@ input:active + .cookie-parameter__label::after {
     top: 0;
   }
 
-  .cookie-banner a:hover,
-  .cookie-banner button:hover,
-  .cookie-banner a:focus-visible,
-  .cookie-banner button:focus-visible {
+  .cookie-layer-menu a:hover,
+  .cookie-layer-menu button:hover,
+  .cookie-layer-menu a:focus-visible,
+  .cookie-layer-menu button:focus-visible {
     font-weight: $font-weight-bold;
   }
 
-  .cookie-banner > *:last-child {
+  .cookie-layer-menu > *:last-child {
     margin-right: 0;
   }
 
-  .cookie-banner > *:last-child:after {
+  .cookie-layer-menu > *:last-child:after {
     display: none;
   }
 }
@@ -257,10 +234,6 @@ input:active + .cookie-parameter__label::after {
   width: 100%;
   padding: 3.6em 1.2em 2.9em;
   background: #fff;
-}
-
-@media only screen and (min-width: 500px) {
-  padding: 3.6em 1.2em 2.9em;
 }
 
 .cookie__details.active {
@@ -304,32 +277,9 @@ input:active + .cookie-parameter__label::after {
 
 .cookie-detail-name {
   color: #fff;
-  background-color: #00aecc;
+  background-color: var(--color-secondary);
   font-weight: 700;
   font-size: 1.2rem;
   padding: 5px;
   margin-bottom: 5px;
-}
-
-.close-button {
-  position: absolute;
-  right: 5%;
-  top: 0%;
-}
-
-/* /// SWITCHERS */
-
-.cookie-switchers {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-between;
-  margin: 1.9em 0 1.4em;
-  row-gap: 0.625em;
-}
-
-@media only screen and (min-width: 500px) {
-  .cookie-switchers {
-    margin: 1.9em 0;
-  }
 }

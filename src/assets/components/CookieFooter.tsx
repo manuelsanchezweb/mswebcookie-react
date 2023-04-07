@@ -1,52 +1,26 @@
+import { useCookieContext } from "../context/CookieContext";
+
 export default function CookieFooter({
   setIsCookieDetailsOpen,
 }: {
   setIsCookieDetailsOpen: (value: boolean) => void;
 }) {
+  const { data } = useCookieContext();
   return (
-    <>
-      <style>
-        {`
-          .cookie-layer-menu {
-            display: flex;
-            flex-direction: column;
-            width: max-content;
-            align-items: center;
-            justify-content: center;
-            margin: 1.6em auto 0;
-          }
-  
-          @media only screen and (min-width: 500px) {
-            .cookie-layer-menu {
-              flex-direction: row;
-              width: 100%;
-              margin: 1.6em 0 0;
-            }
-          }
-  
-          @media only screen and (min-width: 768px) {
-            .cookie-layer-menu {
-              margin: 3.3em 0 auto;
-            }
-          }
-          `}
-      </style>
-      <div className="cookie-layer-menu">
-        <a href="/datenschutz/" title="Datenschutz" tabIndex={0}>
-          Datenschutz{" "}
-        </a>
-        <a href="/impressum/" title="Impressum" tabIndex={0}>
-          {" "}
-          Impressum{" "}
-        </a>
-        <button
-          className="cookie__details-link"
-          aria-label="Cookie Details öffnen"
-          onClick={() => setIsCookieDetailsOpen(true)}
-        >
-          Mehr Details
-        </button>
-      </div>
-    </>
+    <div className="cookie-layer-menu flex w-full items-center justify-center mt-6 mx-auto md:mx-0 gap-6 text-sm">
+      <a href="/datenschutz/" title="Datenschutz" tabIndex={0}>
+        {data.cookieFooter.dataProtection}
+      </a>
+      <a href="/impressum/" title="Impressum" tabIndex={0}>
+        {data.cookieFooter.imprint}
+      </a>
+      <button
+        className="cookie__details-link"
+        aria-label="Cookie Details öffnen"
+        onClick={() => setIsCookieDetailsOpen(true)}
+      >
+        {data.cookieFooter.moreDetails}
+      </button>
+    </div>
   );
 }

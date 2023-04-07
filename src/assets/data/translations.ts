@@ -29,6 +29,7 @@ export const TRANSLATIONS = {
       purpose: "Purpose",
       duration: "Duration",
       type: "Type",
+      default: "Function",
     },
   },
   GERMAN: {
@@ -61,6 +62,7 @@ export const TRANSLATIONS = {
       purpose: "Zweck",
       duration: "Dauer",
       type: "Typ",
+      default: "Funktion",
     },
   },
   SPANISH: {
@@ -93,6 +95,7 @@ export const TRANSLATIONS = {
       purpose: "Propósito",
       duration: "Duración",
       type: "Tipo",
+      default: "Funcional",
     },
   },
 };
