@@ -234,6 +234,7 @@ input:active + .cookie-parameter__label::after {
   width: 100%;
   padding: 3.6em 1.2em 2.9em;
   background: #fff;
+  z-index: 10000;
 }
 
 .cookie__details.active {

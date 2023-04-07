@@ -11,7 +11,7 @@ export const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="language-switcher absolute right-6 top-4">
+    <div className="language-switcher absolute left-6 top-4">
       <select
         className="language-switcher__select text-2xl"
         onChange={handleLanguageChange}

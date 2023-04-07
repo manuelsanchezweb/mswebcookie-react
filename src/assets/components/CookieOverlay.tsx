@@ -1,16 +1,11 @@
-import { useEffect } from "react";
+import { useCookieContext } from "../context/CookieContext";
 
 export default function CookieOverlay() {
-  useEffect(() => {
-    const cookieOverlay = document.querySelector(".mswebcookie-overlay");
-    setTimeout(() => {
-      cookieOverlay?.classList.add("active");
-    }, 300);
-  }, []);
+  const { isCookieBannerOpen } = useCookieContext();
 
   return (
     <>
-      {/* <style>
+      <style>
         {`
           #mswebcookie-overlay {
             position: fixed;
@@ -36,8 +31,10 @@ export default function CookieOverlay() {
             }
           }
         `}
-      </style> */}
-      <div id="mswebcookie-overlay" className="active"></div>
+      </style>
+      {isCookieBannerOpen && (
+        <div id="mswebcookie-overlay" className="active"></div>
+      )}
     </>
   );
 }
