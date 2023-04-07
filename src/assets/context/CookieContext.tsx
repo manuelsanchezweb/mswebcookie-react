@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { getRightLanguage } from "../utils/utils";
 
 export enum CookieType {
   YOUTUBE = "cookie-yt",
@@ -53,10 +54,10 @@ export const TRANSLATIONS = {
 };
 
 type CookieContextType = {
-  isCookieBannerOpen: boolean;
-  isYoutubeAccepted: boolean;
-  isGoogleMapsAccepted: boolean;
-  isGoogleAnalyticsAccepted: boolean;
+  isCookieBannerOpen: boolean | null;
+  isYoutubeAccepted: boolean | null;
+  isGoogleMapsAccepted: boolean | null;
+  isGoogleAnalyticsAccepted: boolean | null;
   language: keyof typeof TRANSLATIONS;
   data: typeof TRANSLATIONS.ENGLISH;
   setYoutube: (value: boolean) => void;
@@ -91,32 +92,17 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 
-const browserLang = navigator.language;
-const getRightLanguage = () => {
-  let userLanguage: string;
-  if (browserLang.startsWith("en")) {
-    userLanguage = "ENGLISH";
-  } else if (browserLang.startsWith("es")) {
-    userLanguage = "SPANISH";
-  } else if (browserLang.startsWith("de")) {
-    userLanguage = "GERMAN";
-  } else {
-    userLanguage = "ENGLISH"; // fallback to English if browser language is not supported
-  }
-  return userLanguage;
-};
-
 export const CookieContextProvider = ({ children }: ProviderProps) => {
   const [isCookieBannerOpen, setCookieBannerOpen] = useState(false);
 
   const [isYoutubeAccepted, setYoutube] = useState(
-    Boolean(localStorage.getItem(CookieType.YOUTUBE))
+    JSON.parse(localStorage.getItem(CookieType.YOUTUBE) || "false")
   );
   const [isGoogleMapsAccepted, setGoogleMaps] = useState(
-    Boolean(localStorage.getItem(CookieType.GOOGLE_MAPS))
+    JSON.parse(localStorage.getItem(CookieType.GOOGLE_MAPS) || "false")
   );
   const [isGoogleAnalyticsAccepted, setGoogleAnalytics] = useState(
-    Boolean(localStorage.getItem(CookieType.GOOGLE_ANALYTICS))
+    JSON.parse(localStorage.getItem(CookieType.GOOGLE_ANALYTICS) || "false")
   );
   const [language, setLanguage] = useState(
     localStorage.getItem("language")
@@ -126,18 +112,30 @@ export const CookieContextProvider = ({ children }: ProviderProps) => {
 
   useEffect(() => {
     if (CookieType.YOUTUBE)
-      localStorage.setItem(CookieType.YOUTUBE, String(isYoutubeAccepted));
+      localStorage.setItem(
+        CookieType.YOUTUBE,
+        JSON.stringify(isYoutubeAccepted)
+      );
     if (CookieType.GOOGLE_MAPS)
       localStorage.setItem(
         CookieType.GOOGLE_MAPS,
-        String(isGoogleMapsAccepted)
+        JSON.stringify(isGoogleMapsAccepted)
       );
-    localStorage.setItem(
-      CookieType.GOOGLE_ANALYTICS,
-      String(isGoogleAnalyticsAccepted)
-    );
+    if (CookieType.GOOGLE_ANALYTICS)
+      localStorage.setItem(
+        CookieType.GOOGLE_ANALYTICS,
+        JSON.stringify(isGoogleAnalyticsAccepted)
+      );
+
     if (language) localStorage.setItem("language", language);
     // Update other cookie states in local storage here
+
+    console.log("Updating cookies: ", {
+      isYoutubeAccepted,
+      isGoogleMapsAccepted,
+      isGoogleAnalyticsAccepted,
+      language,
+    });
   }, [
     isYoutubeAccepted,
     isGoogleMapsAccepted,

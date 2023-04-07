@@ -4,10 +4,10 @@ import Debug from "./assets/components/Debug";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Cookie Banner with React and TypeScript</h1>
+    <div className="page">
+      <h1 className="page-title">Cookie Banner with React and TypeScript</h1>
       <Cookie />
-      <Debug open={true} />
+      <Debug />
     </div>
   );
 }
