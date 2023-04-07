@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { TRANSLATIONS } from "../data/translations";
 import { getRightLanguage } from "../utils/utils";
 
 export enum CookieType {
@@ -15,49 +16,11 @@ export enum CookieType {
   GOOGLE_ANALYTICS = "cookie-ga",
 }
 
-// TODO: Get the translation information depending on the language
-
-export const TRANSLATIONS = {
-  ENGLISH: {
-    cookieBanner: {
-      title: "Cookie settings",
-      description:
-        "We use cookies to improve your experience on our website. These cookies provide a better performance, enhance features and enable certain functionality. Some cookies are placed by third party services that appear on our pages. You can change or withdraw your consent at any time.",
-      accept: "Accept cookies",
-      cancel: "Decline cookies",
-      details: "Cookie details",
-      save: "Save settings",
-    },
-  },
-  GERMAN: {
-    cookieBanner: {
-      title: "Cookie-Einstellungen",
-      description:
-        "Wir verwenden Cookies, um Ihre Erfahrung auf unserer Website zu verbessern. Diese Cookies bieten eine bessere Leistung, verbessern Funktionen und ermöglichen bestimmte Funktionalität. Einige Cookies werden von Drittanbietern gesetzt, die auf unseren Seiten erscheinen. Sie können Ihre Einwilligung jederzeit ändern oder widerrufen.",
-      accept: "Cookies akzeptieren",
-      cancel: "Cookies ablehnen",
-      details: "Cookie-Details",
-      save: "Einstellungen speichern",
-    },
-  },
-  SPANISH: {
-    cookieBanner: {
-      title: "Configuración de cookies",
-      description:
-        "Utilizamos cookies para mejorar su experiencia en nuestro sitio web. Estas cookies proporcionan un mejor rendimiento, mejoran las funciones y habilitan ciertas funcionalidades. Algunas cookies son colocadas por servicios de terceros que aparecen en nuestras páginas. Puede cambiar o retirar su consentimiento en cualquier momento.",
-      accept: "Aceptar cookies",
-      cancel: "Rechazar cookies",
-      details: "Detalles de cookies",
-      save: "Guardar configuración",
-    },
-  },
-};
-
 type CookieContextType = {
-  isCookieBannerOpen: boolean | null;
-  isYoutubeAccepted: boolean | null;
-  isGoogleMapsAccepted: boolean | null;
-  isGoogleAnalyticsAccepted: boolean | null;
+  isCookieBannerOpen: boolean;
+  isYoutubeAccepted: boolean;
+  isGoogleMapsAccepted: boolean;
+  isGoogleAnalyticsAccepted: boolean;
   language: keyof typeof TRANSLATIONS;
   data: typeof TRANSLATIONS.ENGLISH;
   setYoutube: (value: boolean) => void;
@@ -128,14 +91,6 @@ export const CookieContextProvider = ({ children }: ProviderProps) => {
       );
 
     if (language) localStorage.setItem("language", language);
-    // Update other cookie states in local storage here
-
-    console.log("Updating cookies: ", {
-      isYoutubeAccepted,
-      isGoogleMapsAccepted,
-      isGoogleAnalyticsAccepted,
-      language,
-    });
   }, [
     isYoutubeAccepted,
     isGoogleMapsAccepted,

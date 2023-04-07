@@ -36,7 +36,7 @@ export default function Debug() {
   return (
     <>
       {isDebugOpened ? (
-        <div className="fixed top-0 left-0 bg-white p-4 z-50 border border-black text-md text-left">
+        <div className="fixed top-0 left-0 bg-white p-4 z-10 border border-black text-md text-left">
           <button
             className="btn mb-2 flex w-fit ml-auto"
             onClick={() => setIsDebugOpened(false)}
@@ -106,7 +106,7 @@ export default function Debug() {
         </div>
       ) : (
         <button
-          className="fixed top-0 left-0 bg-white p-4 z-50 border border-black text-md text-left"
+          className="fixed top-0 left-0 bg-white p-4 z-10 border border-black text-md text-left"
           onClick={() => setIsDebugOpened(true)}
         >
           Open Debug

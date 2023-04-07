@@ -29,7 +29,7 @@ export default function CookieButton({
             position: fixed;
             bottom: 20px;
             left: 38px;
-            z-index: 40;
+            z-index: 30;
             width: 3.1em;
             height: 3.1em;
             box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;

@@ -15,6 +15,10 @@
   font-family: "Roboto", sans-serif;
 }
 
+iframe {
+  max-width: 100%;
+}
+
 /* ///// Styling of the page  ////// */
 
 .page h1 {
@@ -26,7 +30,7 @@
 
 @layer components {
   .btn {
-    @apply bg-gray-500 flex py-1 px-3 text-white rounded-lg text-sm;
+    @apply bg-gray-500 flex py-1 px-3 text-white rounded-lg text-sm w-fit;
   }
 }
 
@@ -311,4 +315,21 @@ input:active + .cookie-parameter__label::after {
   position: absolute;
   right: 5%;
   top: 0%;
+}
+
+/* /// SWITCHERS */
+
+.cookie-switchers {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  margin: 1.9em 0 1.4em;
+  row-gap: 0.625em;
+}
+
+@media only screen and (min-width: 500px) {
+  .cookie-switchers {
+    margin: 1.9em 0;
+  }
 }

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import { CookieDetails, CookieFooter, CookieOptions } from ".";
 import { useCookieContext } from "../context/CookieContext";
-import CookieDetails from "./CookieDetails";
-import CookieFooter from "./CookieFooter";
-import CookieOptions from "./CookieOptions";
+import { LanguageSwitcher } from "./CookieLanguageSwitcher";
 
 export default function CookieBanner() {
   const [isCookieDetailsOpen, setIsCookieDetailsOpen] = useState(false);
 
-  const { data, isCookieBannerOpen } = useCookieContext();
+  const { data, isCookieBannerOpen, language, setLanguage } =
+    useCookieContext();
 
   useEffect(() => {
     const cookieBanner = document.querySelector(".cookie-banner");
@@ -24,6 +24,7 @@ export default function CookieBanner() {
 
   return (
     <div className={`cookie-banner`}>
+      <LanguageSwitcher />
       <div className="cookie-text">
         <div className="cookie-text__title">
           <p className="text-4xl">{data.cookieBanner.title}</p>
