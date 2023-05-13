@@ -1,25 +1,29 @@
-import { useState } from "react";
-import { CookieBanner, CookieButton, CookieOverlay } from ".";
-import { CookieType, useCookieContext } from "../context/CookieContext";
-import IframeGMaps from "./IframeGMaps";
-import IframeYoutube from "./IframeYoutube";
-import { Modal } from "./Modal";
+import { useState } from 'react'
+import { CookieBanner, CookieButton, CookieOverlay } from '.'
+import { CookieType, useCookieContext } from '../context/CookieContext'
+import IframeGMaps from './IframeGMaps'
+import IframeYoutube from './IframeYoutube'
+import { Modal } from './Modal'
+import debugFactory from 'debug'
+
+const debug = debugFactory('components/Cookie')
 
 export default function Cookie() {
   const { isYoutubeAccepted, isGoogleMapsAccepted, setCookieBannerOpen } =
-    useCookieContext();
-  const [isGMapsModalOpen, setIsGMapsModalOpen] = useState(false);
-  const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState(false);
+    useCookieContext()
+  const [isGMapsModalOpen, setIsGMapsModalOpen] = useState(false)
+  const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState(false)
 
   const openCookieBannerAndFocus = (cookieType: string) => {
-    setCookieBannerOpen(true);
+    setCookieBannerOpen(true)
 
     // Add focus here
     const cookieOption = document.querySelector(
       `#${cookieType}`
-    ) as HTMLInputElement;
-    cookieOption?.focus();
-  };
+    ) as HTMLInputElement
+    cookieOption?.focus()
+    debug('This is the option that has been focused now:', cookieOption)
+  }
 
   return (
     <>
@@ -40,8 +44,8 @@ export default function Cookie() {
                 <button
                   className="btn"
                   onClick={() => {
-                    openCookieBannerAndFocus(`${CookieType.YOUTUBE}-id`);
-                    setIsYouTubeModalOpen(false);
+                    openCookieBannerAndFocus(`${CookieType.YOUTUBE}-id`)
+                    setIsYouTubeModalOpen(false)
                   }}
                 >
                   Open Cookie YouTube
@@ -66,8 +70,8 @@ export default function Cookie() {
                 <button
                   className="btn"
                   onClick={() => {
-                    openCookieBannerAndFocus(`${CookieType.GOOGLE_MAPS}-id`);
-                    setIsGMapsModalOpen(false);
+                    openCookieBannerAndFocus(`${CookieType.GOOGLE_MAPS}-id`)
+                    setIsGMapsModalOpen(false)
                   }}
                 >
                   Open Cookie Google Maps
@@ -82,5 +86,5 @@ export default function Cookie() {
       <CookieOverlay />
       <CookieBanner />
     </>
-  );
+  )
 }

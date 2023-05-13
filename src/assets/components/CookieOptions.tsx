@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { CookieType, useCookieContext } from "../context/CookieContext";
+import { useState } from 'react'
+import { CookieType, useCookieContext } from '../context/CookieContext'
+import debugFactory from 'debug'
+
+const debug = debugFactory('components/CookieOptions')
 
 export default function CookieOptions() {
   const {
@@ -11,12 +14,12 @@ export default function CookieOptions() {
     setYoutube,
     setGoogleMaps,
     setGoogleAnalytics,
-  } = useCookieContext();
+  } = useCookieContext()
   const [tempCookieState, setTempCookieState] = useState({
     [CookieType.YOUTUBE]: isYoutubeAccepted,
     [CookieType.GOOGLE_MAPS]: isGoogleMapsAccepted,
     [CookieType.GOOGLE_ANALYTICS]: isGoogleAnalyticsAccepted,
-  });
+  })
 
   // Testing purposes
   // useEffect(() => {
@@ -25,7 +28,7 @@ export default function CookieOptions() {
 
   function renderCookieOptions() {
     return Object.values(CookieType).map((cookieType) => {
-      const labelText = data.cookieLabels[cookieType];
+      const labelText = data.cookieLabels[cookieType]
       return (
         <div className="cookie-parameter" key={cookieType}>
           <input
@@ -37,14 +40,11 @@ export default function CookieOptions() {
             name={`${cookieType}-id`}
             checked={tempCookieState[cookieType] || false}
             onChange={() => {
-              console.log(
-                `Toggling ${cookieType}:`,
-                !tempCookieState[cookieType]
-              );
+              debug(`Toggling ${cookieType}:`, !tempCookieState[cookieType])
               setTempCookieState({
                 ...tempCookieState,
                 [cookieType]: !tempCookieState[cookieType],
-              });
+              })
             }}
           />
           <label
@@ -57,24 +57,25 @@ export default function CookieOptions() {
             {labelText}
           </span>
         </div>
-      );
-    });
+      )
+    })
   }
 
   function handleAccept() {
-    setYoutube(tempCookieState[CookieType.YOUTUBE]);
-    setGoogleMaps(tempCookieState[CookieType.GOOGLE_MAPS]);
-    setGoogleAnalytics(tempCookieState[CookieType.GOOGLE_ANALYTICS]);
-    setCookieBannerOpen(false);
+    setYoutube(tempCookieState[CookieType.YOUTUBE])
+    setGoogleMaps(tempCookieState[CookieType.GOOGLE_MAPS])
+    setGoogleAnalytics(tempCookieState[CookieType.GOOGLE_ANALYTICS])
+    setCookieBannerOpen(false)
+    debug('Cookies accepted: ', tempCookieState)
   }
 
   function handleCancel() {
-    setCookieBannerOpen(false);
+    setCookieBannerOpen(false)
     setTempCookieState({
       [CookieType.YOUTUBE]: isYoutubeAccepted,
       [CookieType.GOOGLE_MAPS]: isGoogleMapsAccepted,
       [CookieType.GOOGLE_ANALYTICS]: isGoogleAnalyticsAccepted,
-    });
+    })
   }
 
   return (
@@ -128,5 +129,5 @@ export default function CookieOptions() {
         </button>
       </div>
     </div>
-  );
+  )
 }
