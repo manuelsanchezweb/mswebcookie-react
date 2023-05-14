@@ -14,6 +14,7 @@ export default function CookieOptions() {
     setYoutube,
     setGoogleMaps,
     setGoogleAnalytics,
+    setHasAlreadyInteractedWithCookieBanner,
   } = useCookieContext()
   const [tempCookieState, setTempCookieState] = useState({
     [CookieType.YOUTUBE]: isYoutubeAccepted,
@@ -66,10 +67,12 @@ export default function CookieOptions() {
     setGoogleMaps(tempCookieState[CookieType.GOOGLE_MAPS])
     setGoogleAnalytics(tempCookieState[CookieType.GOOGLE_ANALYTICS])
     setCookieBannerOpen(false)
+    setHasAlreadyInteractedWithCookieBanner(true)
     debug('Cookies accepted: ', tempCookieState)
   }
 
   function handleCancel() {
+    setHasAlreadyInteractedWithCookieBanner(true)
     setCookieBannerOpen(false)
     setTempCookieState({
       [CookieType.YOUTUBE]: isYoutubeAccepted,

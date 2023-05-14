@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useCookieContext } from "../context/CookieContext";
+import { useState } from 'react'
+import { useCookieContext } from '../context/CookieContext'
 
 export default function Debug() {
   const {
@@ -8,31 +8,38 @@ export default function Debug() {
     isGoogleAnalyticsAccepted,
     language,
     isCookieBannerOpen,
+    hasAlreadyInteractedWithCookieBanner,
     setYoutube,
     setGoogleMaps,
     setGoogleAnalytics,
     setLanguage,
     setCookieBannerOpen,
-  } = useCookieContext();
+    setHasAlreadyInteractedWithCookieBanner,
+  } = useCookieContext()
 
-  const [isDebugOpened, setIsDebugOpened] = useState(false);
+  const [isDebugOpened, setIsDebugOpened] = useState(false)
 
   const toggleYoutubeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setYoutube(event.target.checked);
-  };
+    setYoutube(event.target.checked)
+  }
 
   const toggleGoogleMapsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setGoogleMaps(event.target.checked);
-  };
+    setGoogleMaps(event.target.checked)
+  }
 
   const toggleGoogleAnalyticsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setGoogleAnalytics(event.target.checked);
-  };
+    setGoogleAnalytics(event.target.checked)
+  }
 
+  const toggleHasUserInteracted = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setHasAlreadyInteractedWithCookieBanner(event.target.checked)
+  }
   return (
     <>
       {isDebugOpened ? (
@@ -50,6 +57,10 @@ export default function Debug() {
             <li>YouTube Cookie: {isYoutubeAccepted?.toString()}</li>
             <li>Google Maps Cookie: {isGoogleMapsAccepted?.toString()}</li>
             <li>Google Analytics: {isGoogleAnalyticsAccepted?.toString()}</li>
+            <li>
+              Has User Interacted at least once?:{' '}
+              {hasAlreadyInteractedWithCookieBanner?.toString()}
+            </li>
           </ul>
           <h3 className="text-xl my-2">Setters</h3>
           <hr className="bg-black h-[5px] my-2" />
@@ -57,7 +68,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={isYoutubeAccepted?.toString() === "true"}
+                defaultChecked={isYoutubeAccepted?.toString() === 'true'}
                 onChange={toggleYoutubeChange}
               />
               YouTube
@@ -65,7 +76,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={isGoogleMapsAccepted?.toString() === "true"}
+                defaultChecked={isGoogleMapsAccepted?.toString() === 'true'}
                 onChange={toggleGoogleMapsChange}
               />
               Google Maps
@@ -74,21 +85,31 @@ export default function Debug() {
               <input
                 type="checkbox"
                 defaultChecked={
-                  isGoogleAnalyticsAccepted?.toString() === "true"
+                  isGoogleAnalyticsAccepted?.toString() === 'true'
                 }
                 onChange={toggleGoogleAnalyticsChange}
               />
               Google Analytics
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                defaultChecked={
+                  hasAlreadyInteractedWithCookieBanner?.toString() === 'true'
+                }
+                onChange={toggleHasUserInteracted}
+              />
+              Toggle Has User Interacted
             </label>
           </div>
           <section>
             <h3 className="text-xl my-2">Language</h3>
             <hr className="bg-black h-[5px] my-2" />
             <p>{language}</p>
-            <button className="btn mb-2" onClick={() => setLanguage("ENGLISH")}>
+            <button className="btn mb-2" onClick={() => setLanguage('ENGLISH')}>
               Change to English
             </button>
-            <button className="btn" onClick={() => setLanguage("SPANISH")}>
+            <button className="btn" onClick={() => setLanguage('SPANISH')}>
               Change to Spanish
             </button>
           </section>
@@ -113,5 +134,5 @@ export default function Debug() {
         </button>
       )}
     </>
-  );
+  )
 }

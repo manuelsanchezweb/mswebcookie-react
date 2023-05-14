@@ -1,26 +1,31 @@
-import { useEffect, useState } from "react";
-import { CookieDetails, CookieFooter, CookieOptions } from ".";
-import { useCookieContext } from "../context/CookieContext";
-import { LanguageSwitcher } from "./CookieLanguageSwitcher";
+import { useEffect, useState } from 'react'
+import { CookieDetails, CookieFooter, CookieOptions } from '.'
+import { useCookieContext } from '../context/CookieContext'
+import { LanguageSwitcher } from './CookieLanguageSwitcher'
 
 export default function CookieBanner() {
-  const [isCookieDetailsOpen, setIsCookieDetailsOpen] = useState(false);
+  const [isCookieDetailsOpen, setIsCookieDetailsOpen] = useState(false)
 
-  const { data, isCookieBannerOpen, language, setLanguage } =
-    useCookieContext();
+  const {
+    data,
+    isCookieBannerOpen,
+    setCookieBannerOpen,
+    hasAlreadyInteractedWithCookieBanner,
+  } = useCookieContext()
 
   useEffect(() => {
-    const cookieBanner = document.querySelector(".cookie-banner");
+    const cookieBanner = document.querySelector('.cookie-banner')
     if (isCookieBannerOpen) {
       setTimeout(() => {
-        cookieBanner?.classList.add("active");
-      }, 120);
+        cookieBanner?.classList.add('active')
+      }, 120)
     } else {
       setTimeout(() => {
-        cookieBanner?.classList.remove("active");
-      }, 120);
+        cookieBanner?.classList.remove('active')
+      }, 120)
     }
-  }, [isCookieBannerOpen]);
+    if (!hasAlreadyInteractedWithCookieBanner) setCookieBannerOpen(true)
+  }, [isCookieBannerOpen])
 
   return (
     <div className={`cookie-banner`}>
@@ -41,5 +46,5 @@ export default function CookieBanner() {
         setIsCookieDetailsOpen={setIsCookieDetailsOpen}
       />
     </div>
-  );
+  )
 }
