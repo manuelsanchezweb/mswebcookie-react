@@ -1,24 +1,24 @@
 import { useState } from 'react'
-import {
-  CookieLabels,
-  CookieType,
-  useCookieContext,
-} from '../context/CookieContext'
+import { CookieType, useCookieContext } from '../context/CookieContext'
 import debugFactory from 'debug'
 
 const debug = debugFactory('components/CookieOptions')
 
 export default function CookieOptions() {
-  const { setCookieBannerOpen, data, cookies, setCookie } = useCookieContext()
+  const {
+    setCookieBannerOpen,
+    data,
+    cookies,
+    setCookie,
+    setHasUserInteracted,
+    isCookieBannerOpen,
+  } = useCookieContext()
   const [tempCookieState, setTempCookieState] = useState(cookies)
 
-  const cookiesToShow = Object.values(CookieType).filter(
-    (cookieType) => cookieType !== CookieType.HAS_USER_INTERACTED
-  )
-
   function renderCookieOptions() {
-    return Object.values(cookiesToShow).map((cookieType) => {
-      const labelText = ''
+    return Object.values(CookieType).map((cookieType) => {
+      const labelText = data.cookieLabels[cookieType]
+
       return (
         <div className="cookie-parameter" key={cookieType}>
           <input
@@ -28,7 +28,7 @@ export default function CookieOptions() {
             id={`${cookieType}-id`}
             className="cookie-parameter__input cookie-parameter__input-editable"
             name={`${cookieType}-id`}
-            checked={false}
+            checked={tempCookieState[cookieType]}
             onChange={() => {
               debug(`Toggling ${cookieType}:`, !tempCookieState[cookieType])
               setTempCookieState({
@@ -53,17 +53,16 @@ export default function CookieOptions() {
 
   function handleAccept() {
     for (const type of Object.values(CookieType)) {
-      if (type !== CookieType.HAS_USER_INTERACTED) {
-        setCookie(type, tempCookieState[type])
-      }
+      setCookie(type, tempCookieState[type])
     }
+    setHasUserInteracted(true)
     setCookieBannerOpen(false)
-    setCookie(CookieType.HAS_USER_INTERACTED, true)
+    console.log('Is Cookie Open: ', isCookieBannerOpen)
     debug('Cookies accepted: ', tempCookieState)
   }
 
   function handleCancel() {
-    setCookie(CookieType.HAS_USER_INTERACTED, true)
+    setHasUserInteracted(true)
     setCookieBannerOpen(false)
     setTempCookieState(cookies)
   }

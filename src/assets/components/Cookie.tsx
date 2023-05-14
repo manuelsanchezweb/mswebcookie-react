@@ -9,8 +9,7 @@ import debugFactory from 'debug'
 const debug = debugFactory('components/Cookie')
 
 export default function Cookie() {
-  const { isYoutubeAccepted, isGoogleMapsAccepted, setCookieBannerOpen } =
-    useCookieContext()
+  const { cookies, setCookieBannerOpen } = useCookieContext()
   const [isGMapsModalOpen, setIsGMapsModalOpen] = useState(false)
   const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState(false)
 
@@ -28,7 +27,7 @@ export default function Cookie() {
   return (
     <>
       <div className="flex flex-wrap gap-4 items-center justify-center my-12">
-        {isYoutubeAccepted ? (
+        {cookies[CookieType.YOUTUBE] ? (
           <IframeYoutube />
         ) : (
           <>
@@ -54,7 +53,7 @@ export default function Cookie() {
             </Modal>
           </>
         )}
-        {isGoogleMapsAccepted ? (
+        {cookies[CookieType.GOOGLE_MAPS] ? (
           <IframeGMaps />
         ) : (
           <>

@@ -1,14 +1,14 @@
 // LanguageSwitcher.js
-import React from "react";
-import { useCookieContext } from "../context/CookieContext";
+import React from 'react'
+import { useCookieContext } from '../context/CookieContext'
 
 export const LanguageSwitcher = () => {
-  const { setLanguage, language } = useCookieContext();
+  const { setLanguage, language } = useCookieContext()
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setLanguage(event.target.value);
-  };
+    setLanguage(event.target.value as any)
+  }
 
   return (
     <div className="language-switcher absolute left-6 top-4">
@@ -22,5 +22,5 @@ export const LanguageSwitcher = () => {
         <option value="GERMAN">🇩🇪</option>
       </select>
     </div>
-  );
-};
+  )
+}

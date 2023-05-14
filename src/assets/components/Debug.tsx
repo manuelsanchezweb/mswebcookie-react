@@ -5,9 +5,12 @@ export default function Debug() {
   const {
     cookies,
     language,
+    setLanguage,
     isCookieBannerOpen,
     setCookie,
     setCookieBannerOpen,
+    hasUserInteracted,
+    setHasUserInteracted,
   } = useCookieContext()
 
   const [isDebugOpened, setIsDebugOpened] = useState(false)
@@ -31,7 +34,7 @@ export default function Debug() {
   const toggleHasUserInteracted = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setCookie(CookieType.HAS_USER_INTERACTED, event.target.checked)
+    setHasUserInteracted(event.target.checked)
   }
   return (
     <>
@@ -52,7 +55,7 @@ export default function Debug() {
             <li>Google Analytics: {cookies['cookie-ga']?.toString()}</li>
             <li>
               Has User Interacted at least once?:{' '}
-              {cookies.hasAlreadyInteractedWithCookieBanner?.toString()}
+              {hasUserInteracted?.toString()}
             </li>
           </ul>
           <h3 className="text-xl my-2">Setters</h3>
@@ -85,10 +88,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={
-                  cookies.hasAlreadyInteractedWithCookieBanner?.toString() ===
-                  'true'
-                }
+                defaultChecked={hasUserInteracted?.toString() === 'true'}
                 onChange={toggleHasUserInteracted}
               />
               Toggle Has User Interacted
@@ -98,16 +98,10 @@ export default function Debug() {
             <h3 className="text-xl my-2">Language</h3>
             <hr className="bg-black h-[5px] my-2" />
             <p>{language}</p>
-            <button
-              className="btn mb-2"
-              onClick={() => setCookie(CookieType.LANGUAGE, 'ENGLISH')}
-            >
+            <button className="btn mb-2" onClick={() => setLanguage('ENGLISH')}>
               Change to English
             </button>
-            <button
-              className="btn"
-              onClick={() => setCookie(CookieType.LANGUAGE, 'SPANISH')}
-            >
+            <button className="btn" onClick={() => setLanguage('SPANISH')}>
               Change to Spanish
             </button>
           </section>
