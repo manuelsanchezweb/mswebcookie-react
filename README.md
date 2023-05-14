@@ -23,5 +23,5 @@ Para cambiar el estilo principal del Banner, échale un vistazo a los colores de
 
 Hay dos formas de hacer debug en este proyecto:
 
-- O bien haciendo uso del modal Debug.tsx, que nos ayudará desde el cliente a ver el estado de las variables y a hacer toggle con los setters.
-- O bien utilizando el npm package debug, que nos ayudará en los casos en los que necesitamos más prosa.
+- O bien haciendo uso del modal `Debug.tsx`, que nos ayudará desde el cliente a ver el estado de las variables y a hacer toggle con los setters.
+- O bien utilizando el `npm package debug`, que nos ayudará en los casos en los que necesitamos más prosa.
