@@ -2,7 +2,7 @@
   "name": "mswebcookie-react",
   "description": "Template of a Cookie Banner for React using TailwindCSS",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
