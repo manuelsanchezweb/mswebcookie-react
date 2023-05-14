@@ -1,44 +1,40 @@
 import { useState } from 'react'
-import { useCookieContext } from '../context/CookieContext'
+import { CookieType, useCookieContext } from '../context/CookieContext'
 
 export default function Debug() {
   const {
-    isYoutubeAccepted,
-    isGoogleMapsAccepted,
-    isGoogleAnalyticsAccepted,
+    cookies,
     language,
-    isCookieBannerOpen,
-    hasAlreadyInteractedWithCookieBanner,
-    setYoutube,
-    setGoogleMaps,
-    setGoogleAnalytics,
     setLanguage,
+    isCookieBannerOpen,
+    setCookie,
     setCookieBannerOpen,
-    setHasAlreadyInteractedWithCookieBanner,
+    hasUserInteracted,
+    setHasUserInteracted,
   } = useCookieContext()
 
   const [isDebugOpened, setIsDebugOpened] = useState(false)
 
   const toggleYoutubeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setYoutube(event.target.checked)
+    setCookie(CookieType.YOUTUBE, event.target.checked)
   }
 
   const toggleGoogleMapsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setGoogleMaps(event.target.checked)
+    setCookie(CookieType.GOOGLE_MAPS, event.target.checked)
   }
 
   const toggleGoogleAnalyticsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setGoogleAnalytics(event.target.checked)
+    setCookie(CookieType.GOOGLE_ANALYTICS, event.target.checked)
   }
 
   const toggleHasUserInteracted = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setHasAlreadyInteractedWithCookieBanner(event.target.checked)
+    setHasUserInteracted(event.target.checked)
   }
   return (
     <>
@@ -54,12 +50,12 @@ export default function Debug() {
           <h3 className="text-xl mb-2">Cookies</h3>
           <hr className="bg-black h-[5px] my-2" />
           <ul>
-            <li>YouTube Cookie: {isYoutubeAccepted?.toString()}</li>
-            <li>Google Maps Cookie: {isGoogleMapsAccepted?.toString()}</li>
-            <li>Google Analytics: {isGoogleAnalyticsAccepted?.toString()}</li>
+            <li>YouTube Cookie: {cookies['cookie-yt']?.toString()}</li>
+            <li>Google Maps Cookie: {cookies['cookie-gm']?.toString()}</li>
+            <li>Google Analytics: {cookies['cookie-ga']?.toString()}</li>
             <li>
               Has User Interacted at least once?:{' '}
-              {hasAlreadyInteractedWithCookieBanner?.toString()}
+              {hasUserInteracted?.toString()}
             </li>
           </ul>
           <h3 className="text-xl my-2">Setters</h3>
@@ -68,7 +64,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={isYoutubeAccepted?.toString() === 'true'}
+                defaultChecked={cookies['cookie-yt']?.toString() === 'true'}
                 onChange={toggleYoutubeChange}
               />
               YouTube
@@ -76,7 +72,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={isGoogleMapsAccepted?.toString() === 'true'}
+                defaultChecked={cookies['cookie-gm']?.toString() === 'true'}
                 onChange={toggleGoogleMapsChange}
               />
               Google Maps
@@ -84,9 +80,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={
-                  isGoogleAnalyticsAccepted?.toString() === 'true'
-                }
+                defaultChecked={cookies['cookie-ga']?.toString() === 'true'}
                 onChange={toggleGoogleAnalyticsChange}
               />
               Google Analytics
@@ -94,9 +88,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={
-                  hasAlreadyInteractedWithCookieBanner?.toString() === 'true'
-                }
+                defaultChecked={hasUserInteracted?.toString() === 'true'}
                 onChange={toggleHasUserInteracted}
               />
               Toggle Has User Interacted

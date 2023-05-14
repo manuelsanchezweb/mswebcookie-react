@@ -12,7 +12,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 :root {
@@ -150,7 +150,7 @@ input:focus + .cookie-parameter__label::after {
   left: 0;
   position: relative;
   display: block;
-  content: "";
+  content: '';
   width: 55%;
   height: 100%;
   border-radius: 2em;
@@ -199,7 +199,7 @@ input:active + .cookie-parameter__label::after {
 
   .cookie-layer-menu a:after,
   .cookie-layer-menu button:after {
-    content: "|";
+    content: '|';
     width: 1px;
     height: 1px;
     position: absolute;
@@ -245,7 +245,7 @@ input:active + .cookie-parameter__label::after {
 .cookie__details-link {
   background: transparent;
   border: none;
-  color: map-get($colors, "dark");
+  color: map-get($colors, 'dark');
   border: none;
   border-radius: 0;
   padding: 0;
@@ -253,7 +253,7 @@ input:active + .cookie-parameter__label::after {
 }
 
 .cookie__details:is(:hover, :focus) {
-  background: transparent;
+  background: white;
   color: #292929;
 }
 

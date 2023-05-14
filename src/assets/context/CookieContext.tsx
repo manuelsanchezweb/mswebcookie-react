@@ -11,50 +11,47 @@ import { TRANSLATIONS } from '../data/translations'
 import { getRightLanguage } from '../utils/utils'
 
 export enum CookieType {
+  // Add the cookie labels
   YOUTUBE = 'cookie-yt',
   GOOGLE_MAPS = 'cookie-gm',
   GOOGLE_ANALYTICS = 'cookie-ga',
 }
 
-export const HAS__USER_INTERACTED = 'hasAlreadyInteractedWithCookieBanner'
+export enum CookieOptions {
+  LANGUAGE = 'language',
+  HAS_USER_INTERACTED = 'hasAlreadyInteractedWithCookieBanner',
+}
 
 type CookieContextType = {
-  isCookieBannerOpen: boolean
-  isYoutubeAccepted: boolean
-  isGoogleMapsAccepted: boolean
-  isGoogleAnalyticsAccepted: boolean
-  hasAlreadyInteractedWithCookieBanner: boolean
+  cookies: Record<CookieType, boolean>
   language: keyof typeof TRANSLATIONS
+  setLanguage: (value: keyof typeof TRANSLATIONS) => void
   data: typeof TRANSLATIONS.ENGLISH
-  setYoutube: (value: boolean) => void
-  setGoogleMaps: (value: boolean) => void
-  setGoogleAnalytics: (value: boolean) => void
-  setLanguage: (value: string) => void
+  setCookie: (type: CookieType, value: boolean | string) => void
+  isCookieBannerOpen: boolean
   setCookieBannerOpen: (value: boolean) => void
-  setHasAlreadyInteractedWithCookieBanner: (value: boolean) => void
-  // Add other cookie states here
+  hasUserInteracted: boolean
+  setHasUserInteracted: (value: boolean) => void
+}
+
+let defaultCookies: any = {}
+for (const type of Object.values(CookieType)) {
+  const item = localStorage.getItem(type)
+
+  defaultCookies[type] = JSON.parse(item || 'false')
 }
 
 const CookieContext = createContext<CookieContextType>({
   // default states also from local storage
-  isCookieBannerOpen: false,
-  isYoutubeAccepted: Boolean(localStorage.getItem(CookieType.YOUTUBE)),
-  isGoogleMapsAccepted: Boolean(localStorage.getItem(CookieType.GOOGLE_MAPS)),
-  isGoogleAnalyticsAccepted: Boolean(
-    localStorage.getItem(CookieType.GOOGLE_ANALYTICS)
-  ),
+  cookies: defaultCookies,
   language: 'ENGLISH',
-  data: TRANSLATIONS.ENGLISH,
-  hasAlreadyInteractedWithCookieBanner: Boolean(
-    localStorage.getItem(HAS__USER_INTERACTED)
-  ),
-  // Add other cookie states here
-  setYoutube: () => {},
-  setGoogleMaps: () => {},
-  setGoogleAnalytics: () => {},
   setLanguage: () => {},
+  data: TRANSLATIONS.ENGLISH,
+  setCookie: () => {},
+  isCookieBannerOpen: false,
   setCookieBannerOpen: () => {},
-  setHasAlreadyInteractedWithCookieBanner: () => {},
+  hasUserInteracted: false,
+  setHasUserInteracted: () => {},
 })
 
 export const useCookieContext = () => useContext(CookieContext)
@@ -65,76 +62,55 @@ type ProviderProps = {
 
 export const CookieContextProvider = ({ children }: ProviderProps) => {
   const [isCookieBannerOpen, setCookieBannerOpen] = useState(false)
-  const [
-    hasAlreadyInteractedWithCookieBanner,
-    setHasAlreadyInteractedWithCookieBanner,
-  ] = useState(
-    JSON.parse(localStorage.getItem(HAS__USER_INTERACTED) || 'false')
-  )
+  const [cookies, setCookies] =
+    useState<Record<CookieType, boolean>>(defaultCookies)
 
-  const [isYoutubeAccepted, setYoutube] = useState(
-    JSON.parse(localStorage.getItem(CookieType.YOUTUBE) || 'false')
-  )
-  const [isGoogleMapsAccepted, setGoogleMaps] = useState(
-    JSON.parse(localStorage.getItem(CookieType.GOOGLE_MAPS) || 'false')
-  )
-  const [isGoogleAnalyticsAccepted, setGoogleAnalytics] = useState(
-    JSON.parse(localStorage.getItem(CookieType.GOOGLE_ANALYTICS) || 'false')
-  )
   const [language, setLanguage] = useState(
-    localStorage.getItem('language')
-      ? localStorage.getItem('language')
+    localStorage.getItem(CookieOptions.LANGUAGE)
+      ? localStorage.getItem(CookieOptions.LANGUAGE)
       : getRightLanguage()
   )
 
+  const [hasUserInteracted, setHasUserInteracted] = useState(
+    localStorage.getItem(CookieOptions.HAS_USER_INTERACTED)
+      ? JSON.parse(localStorage.getItem(CookieOptions.HAS_USER_INTERACTED)!)
+      : false
+  )
+
   useEffect(() => {
-    if (CookieType.YOUTUBE)
+    Object.entries(cookies).forEach(([type, value]) => {
+      localStorage.setItem(type, JSON.stringify(value))
+    })
+    if (language) localStorage.setItem(CookieOptions.LANGUAGE, language)
+    if (hasUserInteracted) {
       localStorage.setItem(
-        CookieType.YOUTUBE,
-        JSON.stringify(isYoutubeAccepted)
+        CookieOptions.HAS_USER_INTERACTED,
+        JSON.stringify(hasUserInteracted)
       )
-    if (CookieType.GOOGLE_MAPS)
-      localStorage.setItem(
-        CookieType.GOOGLE_MAPS,
-        JSON.stringify(isGoogleMapsAccepted)
-      )
-    if (CookieType.GOOGLE_ANALYTICS)
-      localStorage.setItem(
-        CookieType.GOOGLE_ANALYTICS,
-        JSON.stringify(isGoogleAnalyticsAccepted)
-      )
-
-    if (HAS__USER_INTERACTED)
-      localStorage.setItem(
-        HAS__USER_INTERACTED,
-        JSON.stringify(hasAlreadyInteractedWithCookieBanner)
-      )
-
-    if (language) localStorage.setItem('language', language)
-  }, [
-    isYoutubeAccepted,
-    isGoogleMapsAccepted,
-    isGoogleAnalyticsAccepted,
-    language,
-    hasAlreadyInteractedWithCookieBanner,
-  ])
+    } else {
+      localStorage.removeItem(CookieOptions.HAS_USER_INTERACTED)
+    }
+  }, [cookies, language, hasUserInteracted])
 
   const data = TRANSLATIONS[language as keyof typeof TRANSLATIONS]
 
+  const setCookie = (type: CookieType, value: boolean | string) => {
+    setCookies((prev) => ({
+      ...prev,
+      [type]: value,
+    }))
+  }
+
   const value = {
-    isYoutubeAccepted,
-    setYoutube,
-    isGoogleMapsAccepted,
-    setGoogleMaps,
-    isGoogleAnalyticsAccepted,
-    setGoogleAnalytics,
+    cookies,
     language,
     setLanguage,
     data,
+    setCookie,
     isCookieBannerOpen,
     setCookieBannerOpen,
-    hasAlreadyInteractedWithCookieBanner,
-    setHasAlreadyInteractedWithCookieBanner,
+    hasUserInteracted,
+    setHasUserInteracted,
     // Add other cookie states and related setter functions here
   }
 

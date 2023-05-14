@@ -8,28 +8,17 @@ export default function CookieOptions() {
   const {
     setCookieBannerOpen,
     data,
-    isYoutubeAccepted,
-    isGoogleMapsAccepted,
-    isGoogleAnalyticsAccepted,
-    setYoutube,
-    setGoogleMaps,
-    setGoogleAnalytics,
-    setHasAlreadyInteractedWithCookieBanner,
+    cookies,
+    setCookie,
+    setHasUserInteracted,
+    isCookieBannerOpen,
   } = useCookieContext()
-  const [tempCookieState, setTempCookieState] = useState({
-    [CookieType.YOUTUBE]: isYoutubeAccepted,
-    [CookieType.GOOGLE_MAPS]: isGoogleMapsAccepted,
-    [CookieType.GOOGLE_ANALYTICS]: isGoogleAnalyticsAccepted,
-  })
-
-  // Testing purposes
-  // useEffect(() => {
-  //   console.log("Updating cookies: ", tempCookieState);
-  // }, [tempCookieState]);
+  const [tempCookieState, setTempCookieState] = useState(cookies)
 
   function renderCookieOptions() {
     return Object.values(CookieType).map((cookieType) => {
       const labelText = data.cookieLabels[cookieType]
+
       return (
         <div className="cookie-parameter" key={cookieType}>
           <input
@@ -39,7 +28,7 @@ export default function CookieOptions() {
             id={`${cookieType}-id`}
             className="cookie-parameter__input cookie-parameter__input-editable"
             name={`${cookieType}-id`}
-            checked={tempCookieState[cookieType] || false}
+            checked={tempCookieState[cookieType]}
             onChange={() => {
               debug(`Toggling ${cookieType}:`, !tempCookieState[cookieType])
               setTempCookieState({
@@ -63,22 +52,19 @@ export default function CookieOptions() {
   }
 
   function handleAccept() {
-    setYoutube(tempCookieState[CookieType.YOUTUBE])
-    setGoogleMaps(tempCookieState[CookieType.GOOGLE_MAPS])
-    setGoogleAnalytics(tempCookieState[CookieType.GOOGLE_ANALYTICS])
+    for (const type of Object.values(CookieType)) {
+      setCookie(type, tempCookieState[type])
+    }
+    setHasUserInteracted(true)
     setCookieBannerOpen(false)
-    setHasAlreadyInteractedWithCookieBanner(true)
+    console.log('Is Cookie Open: ', isCookieBannerOpen)
     debug('Cookies accepted: ', tempCookieState)
   }
 
   function handleCancel() {
-    setHasAlreadyInteractedWithCookieBanner(true)
+    setHasUserInteracted(true)
     setCookieBannerOpen(false)
-    setTempCookieState({
-      [CookieType.YOUTUBE]: isYoutubeAccepted,
-      [CookieType.GOOGLE_MAPS]: isGoogleMapsAccepted,
-      [CookieType.GOOGLE_ANALYTICS]: isGoogleAnalyticsAccepted,
-    })
+    setTempCookieState(cookies)
   }
 
   return (
