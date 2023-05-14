@@ -1,44 +1,37 @@
 import { useState } from 'react'
-import { useCookieContext } from '../context/CookieContext'
+import { CookieType, useCookieContext } from '../context/CookieContext'
 
 export default function Debug() {
   const {
-    isYoutubeAccepted,
-    isGoogleMapsAccepted,
-    isGoogleAnalyticsAccepted,
+    cookies,
     language,
     isCookieBannerOpen,
-    hasAlreadyInteractedWithCookieBanner,
-    setYoutube,
-    setGoogleMaps,
-    setGoogleAnalytics,
-    setLanguage,
+    setCookie,
     setCookieBannerOpen,
-    setHasAlreadyInteractedWithCookieBanner,
   } = useCookieContext()
 
   const [isDebugOpened, setIsDebugOpened] = useState(false)
 
   const toggleYoutubeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setYoutube(event.target.checked)
+    setCookie(CookieType.YOUTUBE, event.target.checked)
   }
 
   const toggleGoogleMapsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setGoogleMaps(event.target.checked)
+    setCookie(CookieType.GOOGLE_MAPS, event.target.checked)
   }
 
   const toggleGoogleAnalyticsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setGoogleAnalytics(event.target.checked)
+    setCookie(CookieType.GOOGLE_ANALYTICS, event.target.checked)
   }
 
   const toggleHasUserInteracted = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setHasAlreadyInteractedWithCookieBanner(event.target.checked)
+    setCookie(CookieType.HAS_USER_INTERACTED, event.target.checked)
   }
   return (
     <>
@@ -54,12 +47,12 @@ export default function Debug() {
           <h3 className="text-xl mb-2">Cookies</h3>
           <hr className="bg-black h-[5px] my-2" />
           <ul>
-            <li>YouTube Cookie: {isYoutubeAccepted?.toString()}</li>
-            <li>Google Maps Cookie: {isGoogleMapsAccepted?.toString()}</li>
-            <li>Google Analytics: {isGoogleAnalyticsAccepted?.toString()}</li>
+            <li>YouTube Cookie: {cookies['cookie-yt']?.toString()}</li>
+            <li>Google Maps Cookie: {cookies['cookie-gm']?.toString()}</li>
+            <li>Google Analytics: {cookies['cookie-ga']?.toString()}</li>
             <li>
               Has User Interacted at least once?:{' '}
-              {hasAlreadyInteractedWithCookieBanner?.toString()}
+              {cookies.hasAlreadyInteractedWithCookieBanner?.toString()}
             </li>
           </ul>
           <h3 className="text-xl my-2">Setters</h3>
@@ -68,7 +61,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={isYoutubeAccepted?.toString() === 'true'}
+                defaultChecked={cookies['cookie-yt']?.toString() === 'true'}
                 onChange={toggleYoutubeChange}
               />
               YouTube
@@ -76,7 +69,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={isGoogleMapsAccepted?.toString() === 'true'}
+                defaultChecked={cookies['cookie-gm']?.toString() === 'true'}
                 onChange={toggleGoogleMapsChange}
               />
               Google Maps
@@ -84,9 +77,7 @@ export default function Debug() {
             <label>
               <input
                 type="checkbox"
-                defaultChecked={
-                  isGoogleAnalyticsAccepted?.toString() === 'true'
-                }
+                defaultChecked={cookies['cookie-ga']?.toString() === 'true'}
                 onChange={toggleGoogleAnalyticsChange}
               />
               Google Analytics
@@ -95,7 +86,8 @@ export default function Debug() {
               <input
                 type="checkbox"
                 defaultChecked={
-                  hasAlreadyInteractedWithCookieBanner?.toString() === 'true'
+                  cookies.hasAlreadyInteractedWithCookieBanner?.toString() ===
+                  'true'
                 }
                 onChange={toggleHasUserInteracted}
               />
@@ -106,10 +98,16 @@ export default function Debug() {
             <h3 className="text-xl my-2">Language</h3>
             <hr className="bg-black h-[5px] my-2" />
             <p>{language}</p>
-            <button className="btn mb-2" onClick={() => setLanguage('ENGLISH')}>
+            <button
+              className="btn mb-2"
+              onClick={() => setCookie(CookieType.LANGUAGE, 'ENGLISH')}
+            >
               Change to English
             </button>
-            <button className="btn" onClick={() => setLanguage('SPANISH')}>
+            <button
+              className="btn"
+              onClick={() => setCookie(CookieType.LANGUAGE, 'SPANISH')}
+            >
               Change to Spanish
             </button>
           </section>

@@ -10,7 +10,6 @@ export const TRANSLATIONS = {
       save: 'Save settings',
     },
     cookieLabels: {
-      'cookie-fn': 'Function',
       'cookie-yt': 'YouTube',
       'cookie-gm': 'Google Maps',
       'cookie-ga': 'Google Analytics',
@@ -43,7 +42,6 @@ export const TRANSLATIONS = {
       save: 'Einstellungen speichern',
     },
     cookieLabels: {
-      'cookie-fn': 'Funktion',
       'cookie-yt': 'YouTube',
       'cookie-gm': 'Google Maps',
       'cookie-ga': 'Google Analytics',
@@ -76,7 +74,6 @@ export const TRANSLATIONS = {
       save: 'Guardar configuración',
     },
     cookieLabels: {
-      'cookie-fn': 'Función',
       'cookie-yt': 'YouTube',
       'cookie-gm': 'Google Maps',
       'cookie-ga': 'Google Analytics',

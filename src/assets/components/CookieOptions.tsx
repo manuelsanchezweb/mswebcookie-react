@@ -1,35 +1,24 @@
 import { useState } from 'react'
-import { CookieType, useCookieContext } from '../context/CookieContext'
+import {
+  CookieLabels,
+  CookieType,
+  useCookieContext,
+} from '../context/CookieContext'
 import debugFactory from 'debug'
 
 const debug = debugFactory('components/CookieOptions')
 
 export default function CookieOptions() {
-  const {
-    setCookieBannerOpen,
-    data,
-    isYoutubeAccepted,
-    isGoogleMapsAccepted,
-    isGoogleAnalyticsAccepted,
-    setYoutube,
-    setGoogleMaps,
-    setGoogleAnalytics,
-    setHasAlreadyInteractedWithCookieBanner,
-  } = useCookieContext()
-  const [tempCookieState, setTempCookieState] = useState({
-    [CookieType.YOUTUBE]: isYoutubeAccepted,
-    [CookieType.GOOGLE_MAPS]: isGoogleMapsAccepted,
-    [CookieType.GOOGLE_ANALYTICS]: isGoogleAnalyticsAccepted,
-  })
+  const { setCookieBannerOpen, data, cookies, setCookie } = useCookieContext()
+  const [tempCookieState, setTempCookieState] = useState(cookies)
 
-  // Testing purposes
-  // useEffect(() => {
-  //   console.log("Updating cookies: ", tempCookieState);
-  // }, [tempCookieState]);
+  const cookiesToShow = Object.values(CookieType).filter(
+    (cookieType) => cookieType !== CookieType.HAS_USER_INTERACTED
+  )
 
   function renderCookieOptions() {
-    return Object.values(CookieType).map((cookieType) => {
-      const labelText = data.cookieLabels[cookieType]
+    return Object.values(cookiesToShow).map((cookieType) => {
+      const labelText = ''
       return (
         <div className="cookie-parameter" key={cookieType}>
           <input
@@ -39,7 +28,7 @@ export default function CookieOptions() {
             id={`${cookieType}-id`}
             className="cookie-parameter__input cookie-parameter__input-editable"
             name={`${cookieType}-id`}
-            checked={tempCookieState[cookieType] || false}
+            checked={false}
             onChange={() => {
               debug(`Toggling ${cookieType}:`, !tempCookieState[cookieType])
               setTempCookieState({
@@ -63,22 +52,20 @@ export default function CookieOptions() {
   }
 
   function handleAccept() {
-    setYoutube(tempCookieState[CookieType.YOUTUBE])
-    setGoogleMaps(tempCookieState[CookieType.GOOGLE_MAPS])
-    setGoogleAnalytics(tempCookieState[CookieType.GOOGLE_ANALYTICS])
+    for (const type of Object.values(CookieType)) {
+      if (type !== CookieType.HAS_USER_INTERACTED) {
+        setCookie(type, tempCookieState[type])
+      }
+    }
     setCookieBannerOpen(false)
-    setHasAlreadyInteractedWithCookieBanner(true)
+    setCookie(CookieType.HAS_USER_INTERACTED, true)
     debug('Cookies accepted: ', tempCookieState)
   }
 
   function handleCancel() {
-    setHasAlreadyInteractedWithCookieBanner(true)
+    setCookie(CookieType.HAS_USER_INTERACTED, true)
     setCookieBannerOpen(false)
-    setTempCookieState({
-      [CookieType.YOUTUBE]: isYoutubeAccepted,
-      [CookieType.GOOGLE_MAPS]: isGoogleMapsAccepted,
-      [CookieType.GOOGLE_ANALYTICS]: isGoogleAnalyticsAccepted,
-    })
+    setTempCookieState(cookies)
   }
 
   return (
