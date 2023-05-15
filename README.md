@@ -16,7 +16,7 @@ Para cambiar el estilo principal del Banner, échale un vistazo a los colores de
 
 ## 🪜 Mejoras
 
-- [ ] El sistema del context, ya que podríamos evitar repetir variables
+- [x] El sistema del context, ya que podríamos evitar repetir variables
 - [ ] El styling. Pasar todo a TailwindCSS. Por ahora está todo a medias.
 
 ## 🪜 Debug
