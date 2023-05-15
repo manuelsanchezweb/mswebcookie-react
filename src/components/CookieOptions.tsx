@@ -11,7 +11,6 @@ export default function CookieOptions() {
     cookies,
     setCookie,
     setHasUserInteracted,
-    isCookieBannerOpen,
   } = useCookieContext()
   const [tempCookieState, setTempCookieState] = useState(cookies)
 
@@ -57,7 +56,6 @@ export default function CookieOptions() {
     }
     setHasUserInteracted(true)
     setCookieBannerOpen(false)
-    console.log('Is Cookie Open: ', isCookieBannerOpen)
     debug('Cookies accepted: ', tempCookieState)
   }
 
@@ -90,7 +88,7 @@ export default function CookieOptions() {
             htmlFor="Function"
           ></label>
           <span className="cookie-parameter__name" id="Funktion-cookies">
-            Funktion
+            {data.cookieDetails.default}
           </span>
         </div>
         {renderCookieOptions()}

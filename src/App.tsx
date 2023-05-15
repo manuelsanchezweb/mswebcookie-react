@@ -1,6 +1,6 @@
-import "./App.css";
-import Cookie from "./assets/components/Cookie";
-import Debug from "./assets/components/Debug";
+import './App.css'
+import Cookie from './components/Cookie'
+import Debug from './components/Debug'
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Cookie />
       <Debug />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

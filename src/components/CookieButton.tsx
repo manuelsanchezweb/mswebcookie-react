@@ -1,23 +1,23 @@
-import { useCookieContext } from "../context/CookieContext";
+import { useCookieContext } from '../context/CookieContext'
 
 type CookieButtonProps = {
-  primaryColor?: string;
-  textColor?: string;
-  IsRounded?: boolean;
-  hasBorder?: boolean;
-  iconCookie?: JSX.Element;
-  ariaLabel?: string;
-};
+  primaryColor?: string
+  textColor?: string
+  IsRounded?: boolean
+  hasBorder?: boolean
+  iconCookie?: JSX.Element
+  ariaLabel?: string
+}
 
 export default function CookieButton({
-  primaryColor = "#ffce00",
-  textColor = "#000",
+  primaryColor = '#ffce00',
+  textColor = '#000',
   IsRounded = true,
   hasBorder = true,
   iconCookie,
-  ariaLabel = "Handle Cookie Settings",
+  ariaLabel = 'Handle Cookie Settings',
 }: CookieButtonProps) {
-  const { isCookieBannerOpen, setCookieBannerOpen } = useCookieContext();
+  const { isCookieBannerOpen, setCookieBannerOpen } = useCookieContext()
 
   return (
     <>
@@ -33,8 +33,8 @@ export default function CookieButton({
             width: 3.1em;
             height: 3.1em;
             box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
-            border: ${hasBorder ? "1px solid #000" : "none"};
-            border-radius: ${IsRounded ? "50%" : "0"};
+            border: ${hasBorder ? '1px solid #000' : 'none'};
+            border-radius: ${IsRounded ? '50%' : '0'};
             transition: background-color 0.3s ease-in-out,
                 transform 0.3s ease-in-out,
                 opacity 0.3s ease-in-out;
@@ -61,7 +61,7 @@ export default function CookieButton({
         title={ariaLabel}
         aria-label={ariaLabel}
         className={`mswebcookie-button flex items-center justify-center ${
-          isCookieBannerOpen ? "" : "active"
+          isCookieBannerOpen ? '' : 'active'
         }`}
         //  className={{
         //   "mswebcookie-button flex items-center justify-center": true,
@@ -86,5 +86,5 @@ export default function CookieButton({
         )}
       </button>
     </>
-  );
+  )
 }
