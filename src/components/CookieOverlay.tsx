@@ -1,7 +1,7 @@
-import { useCookieContext } from "../context/CookieContext";
+import { useCookieContext } from '../context/CookieContext'
 
 export default function CookieOverlay() {
-  const { isCookieBannerOpen } = useCookieContext();
+  const { isCookieBannerOpen } = useCookieContext()
 
   return (
     <>
@@ -36,5 +36,5 @@ export default function CookieOverlay() {
         <div id="mswebcookie-overlay" className="active"></div>
       )}
     </>
-  );
+  )
 }

@@ -1,19 +1,19 @@
-import { useCookieContext } from "../context/CookieContext";
+import { useCookieContext } from '../context/CookieContext'
 
 type CookieDetailsProps = {
-  isCookieDetailsOpen: boolean;
-  setIsCookieDetailsOpen: (value: boolean) => void;
-};
+  isCookieDetailsOpen: boolean
+  setIsCookieDetailsOpen: (value: boolean) => void
+}
 
 export default function CookieDetails({
   isCookieDetailsOpen,
   setIsCookieDetailsOpen,
 }: CookieDetailsProps) {
-  const { data } = useCookieContext();
+  const { data } = useCookieContext()
   return (
     <div
       data-details-cookies=""
-      className={`cookie__details ${isCookieDetailsOpen ? "active" : ""} z-50`}
+      className={`cookie__details ${isCookieDetailsOpen ? 'active' : ''} z-50`}
     >
       <button
         className="absolute top-4 right-6"
@@ -46,5 +46,5 @@ export default function CookieDetails({
         </div>
       </div>
     </div>
-  );
+  )
 }
